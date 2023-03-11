@@ -20,18 +20,19 @@ const userController = {
     },
     update: async function (request, response){
         try {
-            const {name, email, senha} = request.body;
+            const {name, email, senha,status} = request.body;
             const id = request.params.id;
 
             const user = await User.findOne({where: { id } });
 
             if(!user){
-                response.status(400).json("User didn't find!!");
+                response.status(400).json("User not found!!");
             }
 
             user.name = name;
             user.email = email;
             user.senha = senha;
+            user.status = status;
 
             const savedUser = await user.save();
             response.status(200).json(savedUser);
