@@ -8,7 +8,6 @@ sequelize.sync().then(() => {
   console.log("Database connceted sucefull")
 })
 
-import indexRouter from './routes/index.js';
 import usersRouter from './routes/userRoute.js';
 
 var app = express();
@@ -19,7 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
 app.use('/api/User', usersRouter);
 
 

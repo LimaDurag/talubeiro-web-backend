@@ -12,6 +12,9 @@ User.init({
     },
     senha: {
         type: DataTypes.STRING
+    },
+    status: {
+        type: DataTypes.STRING
     }
 }, {
     sequelize,
