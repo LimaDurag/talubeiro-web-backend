@@ -13,7 +13,7 @@ const userController = {
         try {
             const user = await User.create(request.body);
             user.status = "ACTIVE";
-            response.status(200).json(await user.save());
+            response.status(201).json(await user.save());
         } catch (error) {
             response.status(400).json(error);
         }
