@@ -6,7 +6,7 @@ import cors from 'cors';
 import sequelize from "./config/Sequelize.js";
 
 sequelize.sync().then(() => {
-  console.log("Database connceted sucefull")
+  console.log("Database connected successfully")
 })
 
 import usersRouter from './routes/userRoute.js';
