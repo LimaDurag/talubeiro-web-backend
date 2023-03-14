@@ -2,6 +2,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import http from 'http';
 import debug from 'debug';
+import cors from 'cors';
 import sequelize from "./config/Sequelize.js";
 
 sequelize.sync().then(() => {
@@ -12,13 +13,15 @@ import usersRouter from './routes/userRoute.js';
 
 var app = express();
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/api/User', usersRouter);
+
 
 
 /**
