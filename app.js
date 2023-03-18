@@ -4,14 +4,35 @@ import http from 'http';
 import debug from 'debug';
 import cors from 'cors';
 import sequelize from "./config/Sequelize.js";
+import {Server} from "socket.io";
+import usersRouter from './routes/userRoute.js';
+
+const app = express()
+const server = http.createServer(app)
+const io = new Server(server,{ 
+    cors: {
+      origin: 'http://localhost:3000'
+    }
+});
 
 sequelize.sync().then(() => {
   console.log("Database connected successfully")
 })
 
-import usersRouter from './routes/userRoute.js';
 
-var app = express();
+io.on('connection', (socket) => {
+  console.log('a user connected ' + socket.id);
+
+
+  socket.on("SEND_MESSAGE", (data) => {
+    io.emit("MESSAGE_RESPONSE", data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('🔥: A user disconnected');
+  });
+
+});
 
 var port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
@@ -22,13 +43,6 @@ app.use(cookieParser());
 
 app.use('/api/User', usersRouter);
 
-
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.

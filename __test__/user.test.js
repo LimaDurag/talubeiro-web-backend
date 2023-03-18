@@ -1,5 +1,5 @@
 import request from 'supertest';
-const baseURL = "http://localhost:3000/api/"
+const baseURL = "http://localhost:3001/api/"
 /**
  * API MUST BE RUNNING IN PARALLEL
  *-------------------------------------------------- 
