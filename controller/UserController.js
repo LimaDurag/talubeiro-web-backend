@@ -68,6 +68,17 @@ const userController = {
         } catch (error) {
             response.status(400).json(error);
         }
+    },
+    findOneByToken: async function (request, response){
+        try {
+            const token = request.params.token;
+            const user = await User.findOne({where: { token: token } });
+
+            if(!user) response.status(400).json("User didn't find!!");
+            else response.status(200).json(user);
+        } catch (error) {
+            response.status(400).json(error);
+        }
     }  
 } 
 

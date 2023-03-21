@@ -10,16 +10,22 @@ User.init({
     email: {
         type: DataTypes.STRING
     },
-    senha: {
+    // senha: {
+    //     type: DataTypes.STRING
+    // },
+    status: {
         type: DataTypes.STRING
     },
-    status: {
+    token: {
+        type: DataTypes.STRING
+    },
+    avatar_link: {
         type: DataTypes.STRING
     }
 }, {
     sequelize,
     modelName: "User",
-    timestamps: true
+    timestamps: true,
 });
 
 export default User;
