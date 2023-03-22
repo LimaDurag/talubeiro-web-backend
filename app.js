@@ -15,7 +15,7 @@ const io = new Server(server,{
     }
 });
 
-sequelize.sync().then(() => {
+sequelize.sync({ force: true}).then(() => {
   console.log("Database connected successfully")
 })
 
