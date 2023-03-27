@@ -15,23 +15,32 @@ const io = new Server(server,{
     }
 });
 
-sequelize.sync({ force: true}).then(() => {
+sequelize.sync().then(() => {
   console.log("Database connected successfully")
 })
 
+const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
 io.on('connection', (socket) => {
   console.log('a user connected ' + socket.id);
 
-
-  socket.on("SEND_MESSAGE", (data) => {
-    io.emit("MESSAGE_RESPONSE", data);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('🔥: A user disconnected');
-  });
-
+    socket.on('join', function(roomId) {
+      socket.join(roomId);
+      console.log("USER CONNECTED ON A: "+roomId)
+      // Listen for new messages
+      socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+        console.log("TENTANDO ENVIAR MENSAGEM "+ roomId)
+        io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+      })
+      // Leave the room if the user closes the socket
+      socket.on("disconnect", () => {
+        console.log(`Client ${socket.id} diconnected`);
+        socket.removeAllListeners();
+        socket.leave(roomId);
+        socket.disconnect();
+        console,log("User disconnected RoomId: "+roomId)
+      });
+    });
 });
 
 var port = normalizePort(process.env.PORT || '3001');
