@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
         socket.removeAllListeners();
         socket.leave(roomId);
         socket.disconnect();
-        console,log("User disconnected RoomId: "+roomId)
+        console.log("User disconnected RoomId: "+roomId)
       });
     });
 });

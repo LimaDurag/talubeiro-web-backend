@@ -20,7 +20,7 @@ const userController = {
     },
     update: async function (request, response){
         try {
-            const {name, email, senha,status} = request.body;
+            const {name, email, senha, status, avatar_link} = request.body;
             const id = request.params.id;
 
             const user = await User.findOne({where: { id } });
@@ -33,6 +33,7 @@ const userController = {
             user.email = email;
             user.senha = senha;
             user.status = status;
+            user.avatar_link = avatar_link;
 
             const savedUser = await user.save();
             response.status(200).json(savedUser);
