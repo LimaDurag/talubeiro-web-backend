@@ -28,11 +28,7 @@ io.on('connection', (socket) => {
       socket.join(roomId);
       console.log("USER CONNECTED ON A: "+roomId)
       // Listen for new messages
-      socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
-        console.log("TENTANDO ENVIAR MENSAGEM "+ roomId)
-        io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
-      })
-      // Leave the room if the user closes the socket
+
       socket.on("disconnect", () => {
         console.log(`Client ${socket.id} diconnected`);
         socket.removeAllListeners();
@@ -41,6 +37,12 @@ io.on('connection', (socket) => {
         console.log("User disconnected RoomId: "+roomId)
       });
     });
+    socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+      console.log("TENTANDO ENVIAR MENSAGEM ")
+      io.emit(NEW_CHAT_MESSAGE_EVENT, data);
+    })
+    // Leave the room if the user closes the socket
+    
 });
 
 var port = normalizePort(process.env.PORT || '3001');

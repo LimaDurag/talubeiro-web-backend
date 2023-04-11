@@ -80,7 +80,7 @@ const userController = {
         } catch (error) {
             response.status(400).json(error);
         }
-    }  
+    },
 } 
 
 export default userController;
