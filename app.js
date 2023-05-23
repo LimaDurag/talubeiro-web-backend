@@ -20,6 +20,7 @@ sequelize.sync().then(() => {
 })
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
+const NEW_DICE_MESSAGE_EVENT = "newDiceMessage";
 
 io.on('connection', (socket) => {
   console.log('a user connected ' + socket.id);
@@ -39,6 +40,13 @@ io.on('connection', (socket) => {
     });
     socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
       console.log("TENTANDO ENVIAR MENSAGEM ")
+      data = {...data, isDiceMessage: false}
+      io.emit(NEW_CHAT_MESSAGE_EVENT, data);
+    })
+
+    socket.on(NEW_DICE_MESSAGE_EVENT, (data) => {
+      console.log("TENTANDO ENVIAR MENSAGEM DE DADO ")
+      data = {...data, isDiceMessage: true}
       io.emit(NEW_CHAT_MESSAGE_EVENT, data);
     })
     // Leave the room if the user closes the socket
